@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .open_btn {
+        padding: 10px 20px;
+        font-size: 20px;
+        height: 60px;
+        text-align: center;
+        color: aliceblue;
+        background-color: rgb(101, 18, 65);
+        border-radius: 30px;
+      }
+
+      .modal-window {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        padding: 20px;
+        background-color: aliceblue;
+        text-align: center;
+      }
+      .window-btn {
+        position: absolute;
+        top: 5%;
+        right: 5px;
+        width: 20px;
+        height: 20px;
+      }
+      .open-modal {
+        padding: 10px 20px;
+        background-color: aqua;
+        color: #000;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Создайте простое модальное окно, которое появляется при клике на кнопку "Открыть
+модальное окно" и закрывается при клике на кнопку "Закрыть". Модальное окно
+должно содержать заголовок "Модальное окно" и кнопку для закрытия.
+* Модальное окно должно плавно появляться и исчезать при открытии и закрытии. -->
+    <div class="content">
+      <button class="open_btn">Откройте модальное окно</button>
+      <div class="modal-window">
+        <button class="window-btn">x</button>
+        <h1>Модальное окно</h1>
+        <p>Меня можно закрыть</p>
+      </div>
+    </div>
+    <script>
+      const btnOpen = document.querySelector(".open_btn");
+      const modalWindow = document.querySelector(".modal-window");
+      btnOpen.addEventListener("click", (e) => {
+        modalWindow.style.display = "block";
+      });
+      modalWindow.addEventListener("click", ({ target }) => {
+        if (!target.closest(".window-btn")) {
+          return;
+        }
+        modalWindow.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

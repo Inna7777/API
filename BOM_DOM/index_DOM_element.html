@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .reply-form {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Есть дерево коментариев. Каждый коментарий тмеет кнопку ответить, при
+    нажатии на которую открывается форма для написания ответа. Задача при
+    нажатии кнопки ответить открывалось поле только конкретного коментария. -->
+
+    <div class="comment">
+      <p>Коментарий 1</p>
+      <button class="reply-button">Ответить</button>
+      <form action="" class="reply-form">
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          placeholder="Напиши свой ответ"
+        ></textarea>
+        <button type="submit" class="submit-button">Отправить</button>
+      </form>
+
+      <div class="comment">
+        <p>Коментарий 2</p>
+        <button class="reply-button">Ответить</button>
+        <form action="" class="reply-form">
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="Напиши свой ответ"
+          ></textarea>
+          <button type="submit" class="submit-button">Отправить</button>
+        </form>
+      </div>
+      <div class="comment">
+        <p>Коментарий 3</p>
+        <button class="reply-button">Ответить</button>
+        <form action="" class="reply-form">
+          <textarea
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="Напиши свой ответ"
+          ></textarea>
+          <button type="submit" class="submit-button">Отправить</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      const replyButton = document.querySelectorAll(".reply-button");
+
+      replyButton.forEach((button) => {
+        button.addEventListener("click", () => {
+          const comment = button.closest(".comment");
+          const replyForm = comment.querySelector(".reply-form");
+
+          //Скрываем все формы ответов
+          const replyAllForm = document.querySelectorAll(".reply-form");
+          replyAllForm.forEach((form) => {
+            if (form !== replyForm) {
+              form.style.display = "none";
+            }
+          });
+          // Отображаем форму только для выбранного коментария
+          replyForm.style.display = "block";
+        });
+      });
+    </script>
+  </body>
+</html>

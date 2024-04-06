@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="price">
+      <div data-price="25">Товар 1</div>
+      <div data-price="50">Товар 2</div>
+      <div data-price="75">Товар 3</div>
+      <div data-price="100">Товар 4</div>
+    </div>
+    <div class="rating">
+      <div data-rating="2">Товар 1</div>
+      <div data-rating="3">Товар 2</div>
+      <div data-rating="5">Товар 3</div>
+      <div data-rating="4">Товар 4</div>
+    </div>
+    <script>
+      // Создаем функцию, которая принимает максимальную цену и скрывает все елементы с ценой выше указанного значения
+      const filterElementByDataAtribute = (attributeName, maxPrice) => {
+        const elements = Array.from(
+          document.querySelectorAll(`[${attributeName}]`)
+        );
+        elements.forEach((element) => {
+          const price = parseFloat(element.getAttribute(attributeName));
+          if (price > maxPrice) {
+            element.style.display = `none`;
+          }
+        });
+      };
+
+      //вызываем
+      filterElementByDataAtribute("data-price", 50);
+
+      // Создаем фунцию, которая сортирует елементы в  порядке убывания
+      const sortElementsByDataAttribute = (attributeName) => {
+        const rating = document.querySelector(".rating");
+        const elements = Array.from(
+          rating.querySelectorAll(`[${attributeName}]`)
+        );
+        elements.sort((a, b) => {
+          const ratingA = parseInt(a.getAttribute(attributeName));
+          const ratingB = parseInt(b.getAttribute(attributeName));
+          return ratingB - ratingA;
+        });
+        elements.forEach((elements) => {
+          rating.appendChild(elements);
+        });
+      };
+
+      sortElementsByDataAttribute("data-rating");
+    </script>
+  </body>
+</html>

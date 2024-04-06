@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>localStorage</title>
+  </head>
+  <body>
+    <ul class="taskList">
+      <li>
+        Задача 1 <button class="delete-button">Удалить</button>
+        <button class="clone-button">Клонировать</button>
+      </li>
+      <li>
+        Задача 2 <button class="delete-button">Удалить</button>
+        <button class="clone-button">Клонировать</button>
+      </li>
+      <li>
+        Задача 3 <button class="delete-button">Удалить</button>
+        <button class="clone-button">Клонировать</button>
+      </li>
+    </ul>
+
+    <button class="back-button">Вернуться в начало</button>
+    <script>
+      const taskList = document.querySelector(".taskList");
+      const start = document.querySelector(".back-button");
+
+      taskList.addEventListener("click", (event) => {
+        if (event.target.classList.contains("delete-button")) {
+          const taskItem = event.target.closest("li");
+          taskItem.remove(); //Удаление задачи
+          //Сохранение списка задач в локальном хранилище
+          localStorage.setItem("taskList", taskList.innerHTML);
+        }
+        if (event.target.classList.contains("clone-button")) {
+          const taskItem = event.target.closest("li");
+          const cloneTaskItem = taskItem.cloneNode(true); // Клонирование задачи
+          taskItem.after(cloneTaskItem); // вставка клонированной задачи после текущей
+
+          //Сохранение списка задач в локальном хранилище
+          localStorage.setItem("taskList", taskList.innerHTML);
+        }
+      });
+      // востановление списка из локального хранилища
+      if (localStorage.getItem("taskList")) {
+        taskList.innerHTML = localStorage.getItem("taskList");
+      }
+
+      start.addEventListener("click", (event) => {
+        localStorage.clear();
+        location.reload();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://shkolaczlpidotambov-r68.gosweb.gosuslugi.ru/netcat_files/48/188/GFZ_mDs_BmY.jpg"
+    />
+    <style>
+      .loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+      }
+
+      .loader .fa-spinner {
+        font-size: 48px;
+        color: #333;
+        animation: spin 1s linear infinite;
+      }
+      /*анимация вращения*/
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader">
+      <i class="fas fa-spinner"></i>
+    </div>
+    <div class="content hidden">
+      <h1>Заголовок</h1>
+      <p>Содержимое контента</p>
+      <img
+        src="https://shkolaczlpidotambov-r68.gosweb.gosuslugi.ru/netcat_files/48/188/GFZ_mDs_BmY.jpg"
+        alt="8"
+      />
+    </div>
+    <script>
+      window.addEventListener("load", function (e) {
+        const contentEl = document.querySelector(".content");
+        contentEl.classList.remove("hidden");
+        const loaderEl = document.querySelector(".loader");
+        loaderEl.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
