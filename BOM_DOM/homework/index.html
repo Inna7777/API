@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Расписание</title>
     <!-- Подключаем Bootstrap -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -83,7 +83,7 @@
                 <td class ='maxnumber'>${item.maxStudents}</td>
                 <td class= 'currentnumber'>${item.currentStudents}</td>
                 <td><button class="btn_recording">Записаться</button>
-                <button class="btn_canselRecording"  style="display: none" >Отменить запись</button></td>`;
+                <button class="btn_canselRecording"   >Отменить запись</button></td>`;
         scheduleTable.append(row);
 
         if (localStorage.getItem(`${item.name}`)) {
@@ -114,15 +114,13 @@
 
           currentStudents.textContent =
             parseInt(currentStudents.textContent) + 1;
-          //
-          recordingBtn.style.display = "none";
+          // После нажатия кнопки записаться кнопка исчезает кнопка отменить запись появляется
+          recordingBtn.disabled = true;
           alert("Поздравляем вы успешно записались");
-
-          canselRecordingBtn.style.display = "block";
+          canselRecordingBtn.disabled = false;
 
           // Обновляем значение в LocalStorage
           const itemName = row.querySelector("th").textContent;
-
           // Сохраняем данные в LocalStorage
           localStorage.setItem(itemName, row.innerHTML);
         });
@@ -144,8 +142,8 @@
 
           currentStudents.textContent =
             parseInt(currentStudents.textContent) - 1;
-          recordingBtn.style.display = "block";
-          canselRecordingBtn.style.display = "none";
+          recordingBtn.disabled = false;
+          canselRecordingBtn.disabled = true;
 
           const itemName = row.querySelector("th").textContent;
 
