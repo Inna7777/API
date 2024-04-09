@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      img {
+        width: 30%;
+      }
+    </style>
   </head>
   <body>
     <!-- Для создания бесконечной ленты с фотографиями с использованием Unsplash API,
@@ -44,15 +49,21 @@ API-ключ. -->
       };
       async function run() {
         const data = await fetchPhotos();
-        for (const obj of data) {
-          console.log(obj.urls.full);
-        }
+
+        addPhotosInHtml(data);
+        //console.log(obj.urls.full);
       }
       run();
       const photoContainer = document.querySelector("#photo-container");
       console.log(photoContainer);
-      function fetchPhotosInHtml(data) {
+
+      function addPhotosInHtml(data) {
         for (const obj of data) {
+          photoContainer.insertAdjacentHTML(
+            "beforeend",
+            `<div class='photo' >
+                <img src='${obj.urls.full}' alt ='${obj.alt_description}'/></div>`
+          );
         }
       }
     </script>
