@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swiper</title>
+    <style>
+      /* .body {
+        margin: 0;
+        padding: 0;
+      } */
+      img {
+        width: 100%;
+      }
+      .picture {
+        width: 40%;
+        margin: auto;
+      }
+      .buttons {
+        display: flex;
+        width: 50%;
+        justify-content: space-between;
+      }
+      .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Вашей задачей является создание веб-слайдера для отображения изображений на веб-странице. Слайдер должен позволять переключаться между изображениями и отображать их в центре экрана.
+1. Создайте интерфейс веб-страницы, который включает в себя следующие элементы:
+a. Контейнер для отображения текущего изображения.
+b. Кнопки "Предыдущее изображение" и "Следующее изображение" для переключения между изображениями.
+c. Навигационные точки (индикаторы) для быстрого переключения между изображениями.
+2. Используйте HTML для создания элементов интерфейса.
+3. Используйте JavaScript для обработки событий:
+a. При клике на кнопку "Предыдущее изображение" должно отображаться предыдущее изображение.
+b. При клике на кнопку "Следующее изображение" должно отображаться следующее изображение.
+c. При клике на навигационные точки, слайдер должен переключаться к соответствующему изображению.
+4. Слайдер должен циклически переключаться между изображениями, то есть после последнего изображения должно отображаться первое, и наоборот.
+5. Добавьте стилизацию для слайдера и элементов интерфейса с использованием CSS для улучшения внешнего вида. -->
+    <div class="content">
+      <div class="picture"></div>
+      <div class="buttons">
+        <button id="prev">Предыдущее</button>
+        <button id="next">Следующее</button>
+      </div>
+    </div>
+    <script>
+      const blockPicture = document.querySelector(".picture");
+      const prevBtn = document.querySelector("#prev");
+      const nextBtn = document.querySelector("#next");
+      let imgUrl = [
+        "https://sportishka.com/uploads/posts/2022-04/1651174528_1-sportishka-com-p-mashina-porshe-mashini-krasivo-foto-1.jpg",
+        "https://avatars.mds.yandex.net/i?id=eee740a00c176a2ba7b300c0ec94378c82284150-12261047-images-thumbs&n=13",
+        "https://avatars.mds.yandex.net/i?id=1e1784c3c14e821210a2de5f6dec81bf05bf879f-9555577-images-thumbs&n=13",
+      ];
+
+      let currentIndex = 0;
+
+      prevBtn.addEventListener("click", () => {
+        if (currentIndex === 0) {
+          prevBtn.disabled = true;
+          nextBtn.disabled = false;
+        } else {
+          currentIndex--;
+          blockPicture.innerHTML = `<img src="${imgUrl[currentIndex]}" alt="img">`;
+        }
+      });
+
+      nextBtn.addEventListener("click", () => {
+        if (currentIndex === imgUrl.length - 1) {
+          nextBtn.disabled = true;
+          prevBtn.disabled = false;
+        } else {
+          currentIndex++;
+
+          blockPicture.innerHTML = `<img src="${imgUrl[currentIndex]}" alt="img">`;
+        }
+      });
+      blockPicture.innerHTML = `<img src="${imgUrl[currentIndex]}" alt="img">`;
+    </script>
+  </body>
+</html>
