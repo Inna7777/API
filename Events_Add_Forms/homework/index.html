@@ -11,10 +11,14 @@
         padding: 0;
       } */
       img {
-        width: 100%;
+        height: 400px;
+      }
+      .indicator {
+        margin: 0;
+        height: 40px;
       }
       .picture {
-        width: 40%;
+        height: 400px;
         margin: auto;
       }
       .buttons {
@@ -27,6 +31,11 @@
         flex-direction: column;
         align-items: center;
         gap: 20px;
+      }
+      .carousel-indicators {
+        display: flex;
+        gap: 20px;
+        color: blue;
       }
     </style>
   </head>
@@ -47,6 +56,7 @@ c. При клике на навигационные точки, слайдер 
       <div class="picture"></div>
       <div class="buttons">
         <button id="prev">Предыдущее</button>
+        <div class="carousel-indicators"></div>
         <button id="next">Следующее</button>
       </div>
     </div>
@@ -59,8 +69,36 @@ c. При клике на навигационные точки, слайдер 
         "https://avatars.mds.yandex.net/i?id=eee740a00c176a2ba7b300c0ec94378c82284150-12261047-images-thumbs&n=13",
         "https://avatars.mds.yandex.net/i?id=1e1784c3c14e821210a2de5f6dec81bf05bf879f-9555577-images-thumbs&n=13",
       ];
-
+      //const quantityInicators = imgUrl.length;
       let currentIndex = 0;
+      const blockIndicators = document.querySelector(".carousel-indicators");
+
+      function addIndicators() {
+        if (imgUrl === 0) {
+          return;
+        }
+        for (let index = 1; index <= imgUrl.length; index++) {
+          blockIndicators.innerHTML += `<h1 class ='indicator'> __  </h1>`;
+        }
+      }
+      addIndicators();
+
+      const indicatorBtns = document.querySelectorAll(".indicator");
+      let previousIndicatorBtn = null;
+      indicatorBtns.forEach((indicatorBtn, i) => {
+        indicatorBtn.addEventListener("click", () => {
+          const indicator = indicatorBtn.closest(".carousel-indicators");
+          if (!indicator) {
+            return;
+          }
+          if (previousIndicatorBtn) {
+            previousIndicatorBtn.style.color = "blue";
+          }
+          blockPicture.innerHTML = `<img src="${imgUrl[i]}" alt="img">`;
+          indicatorBtn.style.color = " black";
+          previousIndicatorBtn = indicatorBtn;
+        });
+      });
 
       prevBtn.addEventListener("click", () => {
         if (currentIndex === 0) {
