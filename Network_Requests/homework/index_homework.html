@@ -66,32 +66,44 @@
       const photographerName = document.getElementById("photograph-name");
       const likeButton = document.getElementById("button-like");
       const likeCounter = document.getElementById("counter-like");
+      let currentDate = new Date(localStorage.getItem("currentDate")); //  дата переменной браузера
 
       likeCounter.textContent = "Likes: 0"; // начальное значения счетчика лайков на странице.
 
       function fetchPhoto() {
         //функции отправляет запрос на получение случайного изображения с Unsplash.
-        fetch(unsplashUrl)
-          .then((response) => response.json())
-          .then((data) => {
-            unsplashImage.src = data.urls.regular;
-            photographerName.textContent = "Photographer: " + data.user.name;
-          })
-          .catch((error) => console.log("Ошибка при загрузке данных"));
-      }
+        let today = new Date();
+        if (today.toDateString() !== currentDate.toDateString()) {
+          currentDate = today;
 
+          fetch(unsplashUrl)
+            .then((response) => response.json())
+            .then((data) => {
+              unsplashImage.src = data.urls.regular;
+              photographerName.textContent = "Photographer: " + data.user.name;
+              localStorage.setItem("currentDate", today);
+              localStorage.setItem("img", unsplashImage.src);
+              let likeCount = 0;
+              localStorage.setItem("likeCount", likeCount);
+              likeCounter.textContent = localStorage.getItem("likeCount");
+            })
+            .catch((error) => console.log("Ошибка при загрузке данных"));
+        } else {
+          unsplashImage.src = localStorage.getItem("img");
+        }
+      }
       fetchPhoto();
 
-      let likeCount = 0;
       if (localStorage.getItem(`likeCount`)) {
-        likeCounter.textContent = localStorage.getItem(`likeCount`);
+        likeCounter.textContent = "Likes:" + localStorage.getItem(`likeCount`);
       }
 
       likeButton.addEventListener("click", () => {
         //добавление слушателя события клика на кнопку для изменения like
+        let likeCount = localStorage.getItem("likeCount") || 0;
         likeCount++;
         likeCounter.textContent = "Likes: " + likeCount;
-        localStorage.setItem("likeCount", likeCounter.textContent);
+        localStorage.setItem("likeCount", likeCount);
       });
     </script>
   </body>
