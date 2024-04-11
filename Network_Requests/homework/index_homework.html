@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .container {
+      margin: 50px;
+      text-align: center;
+    }
+    #image {
+      width: 30%;
+    }
+
+    #button-like {
+      background-image: url(./heart256.png);
+      background-size: cover;
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 30%;
+    }
+  </style>
+  <body>
+    <!-- Цель: Разработать веб-приложение, которое каждый день будет отображать новое случайное изображение из коллекции Unsplash, давая пользователю возможность узнать больше о фотографе и сделать "лайк" изображению.
+
+Регистрация на Unsplash:
+
+• Перейдите на веб-сайт Unsplash (https://unsplash.com/).
+• Зарегистрируйтесь или войдите в свой аккаунт. (если у вас не было регистрации до этого, новый аккаунт создавать не нужно).
+
+Создание приложения:
+
+• Перейдите на страницу разработчика Unsplash (https://unsplash.com/developers).
+• Нажмите "New Application".
+• Заполните необходимую информацию о приложении (можете использовать http://localhost для тестирования).
+• Получите свой API-ключ после создания приложения.
+
+Разработка веб-приложения:
+
+• Создайте HTML-страницу с элементами: изображение, имя фотографа, кнопка "лайк" и счетчик лайков.
+• Используя JavaScript и ваш API-ключ, получите случайное изображение из Unsplash каждый раз, когда пользователь загружает страницу.
+• Отобразите информацию о фотографе под изображением.
+• Реализуйте функционал "лайка". Каждый раз, когда пользователь нажимает кнопку "лайк", счетчик должен увеличиваться на единицу.
+
+* Дополнительные задачи (по желанию):
+
+• Добавьте функцию сохранения количества лайков в локальное хранилище, чтобы при новой загрузке страницы счетчик не сбрасывался.
+• Реализуйте возможность просмотра предыдущих "фото дня" с сохранением их в истории просмотров. -->
+
+    <div class="container">
+      <img id="image" src="" alt="image" />
+      <p id="photograph-name"></p>
+      <button id="button-like">Like</button>
+      <p id="counter-like"></p>
+    </div>
+    <script>
+      const accessKey = "46WLx1r_b-EKB9TVT8XMSAWf7OCzSx35b5HndonScM8"; // мой API-ключ от Unsplash
+      const unsplashUrl =
+        "https://api.unsplash.com/photos/random?client_id=" + accessKey;
+
+      const unsplashImage = document.getElementById("image");
+      const photographerName = document.getElementById("photograph-name");
+      const likeButton = document.getElementById("button-like");
+      const likeCounter = document.getElementById("counter-like");
+
+      likeCounter.textContent = "Likes: 0"; // начальное значения счетчика лайков на странице.
+
+      function fetchPhoto() {
+        //функции отправляет запрос на получение случайного изображения с Unsplash.
+        fetch(unsplashUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            unsplashImage.src = data.urls.regular;
+            photographerName.textContent = "Photographer: " + data.user.name;
+          })
+          .catch((error) => console.log("Ошибка при загрузке данных"));
+      }
+
+      fetchPhoto();
+
+      let likeCount = 0;
+      if (localStorage.getItem(`likeCount`)) {
+        likeCounter.textContent = localStorage.getItem(`likeCount`);
+      }
+
+      likeButton.addEventListener("click", () => {
+        //добавление слушателя события клика на кнопку для изменения like
+        likeCount++;
+        likeCounter.textContent = "Likes: " + likeCount;
+        localStorage.setItem("likeCount", likeCounter.textContent);
+      });
+    </script>
+  </body>
+</html>

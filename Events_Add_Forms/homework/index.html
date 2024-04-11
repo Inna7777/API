@@ -71,14 +71,14 @@ c. При клике на навигационные точки, слайдер 
       ];
       //const quantityInicators = imgUrl.length;
       let currentIndex = 0;
-      const blockIndicators = document.querySelector(".carousel-indicators");
+      const blockIndicators = document.querySelector(".carousel-indicator");
 
       function addIndicators() {
-        if (imgUrl === 0) {
+        if (imgUrl.length === 0) {
           return;
         }
-        for (let index = 1; index <= imgUrl.length; index++) {
-          blockIndicators.innerHTML += `<h1 class ='indicator'> __  </h1>`;
+        for (let index = 0; index <= imgUrl.length; index++) {
+          blockIndicators.innerHTML += `<h1 id ='${index}' class=".indicator"> __  </h1>`;
         }
       }
       addIndicators();
@@ -99,7 +99,7 @@ c. При клике на навигационные точки, слайдер 
           previousIndicatorBtn = indicatorBtn;
         });
       });
-
+      // функция клика по кнопке Предыдущее
       prevBtn.addEventListener("click", () => {
         if (currentIndex === 0) {
           prevBtn.disabled = true;
@@ -109,7 +109,7 @@ c. При клике на навигационные точки, слайдер 
           blockPicture.innerHTML = `<img src="${imgUrl[currentIndex]}" alt="img">`;
         }
       });
-
+      // функция клика по кнопке Следующее
       nextBtn.addEventListener("click", () => {
         if (currentIndex === imgUrl.length - 1) {
           nextBtn.disabled = true;

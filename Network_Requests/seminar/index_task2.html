@@ -36,25 +36,36 @@ API-ключ. -->
     <div id="photo-container"></div>
     <script>
       const accessKey = "46WLx1r_b-EKB9TVT8XMSAWf7OCzSx35b5HndonScM8";
-      const isFetching = false;
+      let isFetching = false;
 
       const fetchPhotos = async (page) => {
-        const response = await fetch(
-          `https://api.unsplash.com/photos/?page=
-          
-          ${page}&client_id=${accessKey}`
-        );
+        try {
+          const response = await fetch(
+            `https://api.unsplash.com/photos/?page=
 
-        if (!response.ok) {
-          throw new Error("Ошибка при загрузке данных");
+          ${page}&client_id=${accessKey}`
+          );
+
+          if (!response.ok) {
+            throw new Error("Ошибка при загрузке данных");
+          }
+          const data = await response.json();
+          return data;
+        } catch (error) {
+          throw error;
+        } finally {
+          isFetching = false;
         }
-        const data = await response.json();
-        return data;
       };
       let currentPage = 1;
       async function run() {
-        const data = await fetchPhotos(currentPage);
-        addPhotosInHtml(data);
+        try {
+          const data = await fetchPhotos(currentPage);
+          addPhotosInHtml(data);
+        } catch (error) {
+          const errorMessage = document.createElement("div");
+          document.querySelector("#photo-container").append(errorMessage);
+        }
         //console.log(obj.urls.full);
       }
       run();
@@ -70,16 +81,20 @@ API-ключ. -->
           );
         }
       }
-      window.addEventListener("scroll", () => {
+      window.addEventListener("scroll", async () => {
         const percentPage =
           (window.scrollY / (document.body.clientHeight - window.innerHeight)) *
           100;
+
         if (percentPage >= 90 && !isFetching) {
           isFetching = true;
           currentPage++;
-          fetchPhotos(currentPage);
-
-          console.log();
+          try {
+            const data = await fetchPhotos(currentPage);
+            addPhotosInHtml(data);
+          } catch (error) {
+            alert(error.message);
+          }
         }
       });
     </script>
